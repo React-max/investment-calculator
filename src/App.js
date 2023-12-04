@@ -1,9 +1,10 @@
 import Header from "./components/Header/Header";
 import ResultsTable from "./components/ResultsTable/ResultsTable";
-import Form from "./components/UserInput/UserInput";
+import UserInput from "./components/UserInput/UserInput";
 
 function App() {
 	const calculateHandler = (userInput) => {
+		console.log(userInput);
 		// Should be triggered when form is submitted
 		// You might not directly want to bind it to the submit event on the form though...
 
@@ -32,8 +33,8 @@ function App() {
 
 	return (
 		<div>
-			{/* <Header /> */}
-			<Form />
+			<Header />
+			<UserInput onCalculate={calculateHandler} />
 			<ResultsTable />
 		</div>
 	);

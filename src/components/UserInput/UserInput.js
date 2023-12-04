@@ -1,25 +1,46 @@
-const Form = () => {
-	const subHandler = (event) => {
+import { useState } from "react";
+
+const initialUserInput = {
+	"current-savings": 10000,
+	"yearly-contribution": 1200,
+	"expected-return": 7, // 7% interest rate
+	duration: 10,
+};
+
+const UserInput = (props) => {
+	const [userInput, setUserInput] = useState(initialUserInput);
+
+	const submitHandler = (event) => {
 		event.preventDefault();
 		//...
-		console.log("submit");
+		// console.log("submit");
+
+		props.onCalculate(userInput);
 	};
 
 	const resetHandler = () => {
 		//...
-		console.log("reset");
+		// console.log("reset");
+		setUserInput(initialUserInput);
 	};
 
 	const inputChangeHandler = (input, value) => {
-		console.log(input, value);
+		// console.log(input, value);
+		setUserInput((prevInput) => {
+			return {
+				...prevInput,
+				[input]: value,
+			};
+		});
 	};
 
 	return (
-		<form className="form" onSubmit={subHandler}>
+		<form className="form" onSubmit={submitHandler}>
 			<div className="input-group">
 				<p>
 					<label htmlFor="current-savings">Current Savings ($)</label>
 					<input
+						value={userInput["current-savings"]}
 						onChange={(event) =>
 							inputChangeHandler("current-savings", event.target.value)
 						}
@@ -30,6 +51,7 @@ const Form = () => {
 				<p>
 					<label htmlFor="yearly-contribution">Yearly Savings ($)</label>
 					<input
+						value={userInput["yearly-contribution"]}
 						onChange={(event) =>
 							inputChangeHandler("yearly-contribution", event.target.value)
 						}
@@ -44,6 +66,7 @@ const Form = () => {
 						Expected Interest (%, per year)
 					</label>
 					<input
+						value={userInput["expected-return"]}
 						onChange={(event) =>
 							inputChangeHandler("expected-return", event.target.value)
 						}
@@ -54,6 +77,7 @@ const Form = () => {
 				<p>
 					<label htmlFor="duration">Investment Duration (years)</label>
 					<input
+						value={userInput.duration} // duration doesn't contain -, so we can access by . notation
 						onChange={(event) =>
 							inputChangeHandler("duration", event.target.value)
 						}
@@ -74,4 +98,4 @@ const Form = () => {
 	);
 };
 
-export default Form;
+export default UserInput;
